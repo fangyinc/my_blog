@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% import "_wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+
+{% block title %}
+   程方银的个人博客 | {{ super()}}
+{% endblock %}
+{% block style %}
+    {{super()}}
+    {% assets "show_editormd_css" %}
+        <link rel="stylesheet" href="{{ ASSET_URL }}">
+    {% endassets %}
+{% endblock style %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="divider"></div>
+        <div class="section"></div>
+        <div class="section"></div>
+        {#文章列表#}
+        <div class="col s9" id="post-index">
+            {% block posts %}
+            {% include 'post/_post_list.html' %}
+            {% if pagination %}
+            <div class="pagination">
+                {{ macros.pagination_widget(pagination, '.index') }}
+            </div>
+            {% endif %}
+            {% endblock %}
+        </div>
+        {# 侧栏#}
+        <div class="col s3" id="right-index">
+            <div class="collection z-depth-2">
+            <form action="#" method="GET">
+              <div class="input-field">
+                <input class="center-align" placeholder="搜索" id="_imgSearch" type="search" name="searchText" required>
+                  <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                <i class="material-icons">close</i>
+              </div>
+            </form>
+            </div>
+            <div class="collection with-header z-depth-2">
+              <ul>
+                <li class="collection-header center"><h5>分类</h5></li>
+                  {% for cat in cats %}
+                    <li class="collection-item"><div><a href="{{url_for('post.get_category', id=cat.id)}}">
+                        <span class="badge new teal lighten-1" data-badge-caption="">
+                        {{cat.posts.all()|length}}</span>{{cat.name}}</a></div></li>
+                  {% endfor %}
+              </ul>
+            </div>
+
+            <div class="collection with-header z-depth-2">
+              <ul>
+                <li class="collection-header center"><h5>专栏</h5></li>
+                  {% for spc in spcs %}
+                  <li class="collection-item"><div><a href="{{url_for('post.get_spc', id=spc.id)}}">
+                      <span class="badge new teal lighten-1" data-badge-caption="">
+                        {{spc.posts.all()|length}}</span>{{spc.name}}</a></div></li>
+                  {% endfor %}
+              </ul>
+            </div>
+            <div class="collection with-header z-depth-2">
+                <ul>
+                    <li class="collection-header center"><h5>标签</h5></li>
+                </ul>
+                {% for my_tag in Tag.query.all() %}
+                    <div class="chip z-depth-1 grey lighten-5"><a href="{{url_for('post.get_tag', id=my_tag.id)}}">{{my_tag.name}}</a></div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+

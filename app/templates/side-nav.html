@@ -1,0 +1,96 @@
+<ul id="my_slide" class="side-nav">
+    <li>
+        <div class="user-view">
+          <div class="background">
+            <img src="http://my-blog-images.oss-cn-qingdao.aliyuncs.com/oss_test3.jpg">
+          </div>
+          <a href="#!user"><img class="circle" src="http://my-blog-images.oss-cn-qingdao.aliyuncs.com/about_225.jpg"></a>
+          <a href="#!name"><span class="white-text name">程方银</span></a>
+          <a href="#!email"><span class="white-text email">staneyffer@gmail.com</span></a>
+        </div>
+    </li>
+    <li><a href="{{url_for('main.index')}}" style="padding-left: 16px;">
+        <i class="material-icons">home</i>主页</a></li>
+    <li><a href="{{url_for('auth.auth_get_user')}}" style="padding-left: 16px;">
+        <i class="left material-icons">person</i>About</a></li>
+    <li><a href="#modal1" class="modal-trigger" style="padding-left: 16px;">
+        <i class="left material-icons">link</i>友链</a></li>
+
+    <li><div class="divider"></div></li>
+
+    <li class="no-padding">
+        <ul class="collapsible collapsible-accordion">
+          <li>
+            <a class="collapsible-header"><i class="material-icons left">chrome_reader_mode</i>
+                <i class="material-icons right">arrow_drop_down</i>分类</a>
+            <div class="collapsible-body">
+              <ul class="">
+                  {% for cat in cats %}
+                    <li class="collection-item"><div><a href="{{url_for('post.get_category', id=cat.id)}}">
+                        <span class="badge new teal lighten-1" data-badge-caption="">
+                        {{cat.posts.all()|length}}</span>{{cat.name}}</a></div></li>
+                  {% endfor %}
+              </ul>
+            </div>
+          </li>
+          <li>
+            <a class="collapsible-header"><i class="material-icons left">library_books</i>
+                <i class="material-icons right">arrow_drop_down</i>专栏</a>
+            <div class="collapsible-body">
+              <ul class="">
+                  {% for spc in spcs %}
+                  <li class="collection-item"><div><a href="{{url_for('post.get_spc', id=spc.id)}}">
+                      <span class="badge new teal lighten-1" data-badge-caption="">
+                        {{spc.posts.all()|length}}</span>{{spc.name}}</a></div></li>
+                  {% endfor %}
+              </ul>
+            </div>
+          </li>
+          <li>
+            <a class="collapsible-header"><i class="material-icons left">local_offer</i>
+                <i class="material-icons right">arrow_drop_down</i>标签</a>
+            <div class="collapsible-body">
+                {% for my_tag in Tag.query.all() %}
+                    <div class="chip z-depth-1 grey lighten-5"><a href="{{url_for('post.get_tag', id=my_tag.id)}}">{{my_tag.name}}</a></div>
+                {% endfor %}
+            </div>
+          </li>
+          <li>
+            <a class="collapsible-header"><i class="material-icons left">inbox</i>
+                <i class="material-icons right">arrow_drop_down</i>归档</a>
+            <div class="collapsible-body">
+                {% for arch_posts in archive %}
+                <ul class="collapsible popout" data-collapsible="accordion">
+                    <li>
+                        <span class="badge new teal lighten-1" data-badge-caption="">
+                            {{arch_posts|length}}</span>
+                      <div class="collapsible-header blue-text"><i class="material-icons">access_time</i>
+                          {{arch_posts[0].timestamp.year}}年{{arch_posts[0].timestamp.month}}月
+                      </div>
+                      <div class="collapsible-body">
+                          <ul>
+                            {% for post in arch_posts %}
+                            <li href="#" class="collection-item">
+                            <div class="col m3 s3 s12">
+                                <a href="{{url_for('post.show_post', id=post.id)}}" class="black-text">
+                                    {{post.title}}</a></div>
+                            </li>
+                            {% endfor %}
+                          </ul>
+                      </div>
+                    </li>
+                </ul>
+                {% endfor %}
+            </div>
+
+          </li>
+        </ul>
+      </li>
+    <ul>
+        <li><div class="divider"></div></li>
+    </ul>
+    {#
+    <li><a class="subheader">Subheader</a></li>
+    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+    #}
+</ul>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% block head %}
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"
+      charset="utf-8"/>
+    <title>{% block title %}staneyffer{% endblock %}</title>
+    {% block style %}
+        <!--Import Google Icon Font-->
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet">
+
+        {% assets "main_css" %}
+            <link rel="stylesheet" href="{{ ASSET_URL }}" />
+        {% endassets %}
+        {% assets "editormd_css" %}
+            <link rel="stylesheet" href="{{ ASSET_URL }}">
+        {% endassets %}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">
+
+        <link type="text/css" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.3.0/katex.min.css">
+
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+        <link rel="shortcut icon" href="http://my-blog-images.oss-cn-qingdao.aliyuncs.com/about_225.jpg" type="image/x-icon" />
+
+    {% endblock style %}
+    {% block head_js %}
+
+    {% endblock head_js %}
+    {% endblock head %}
+
+</head>
+<body id="base_html">
+
+{% block body %}
+    {% block header %}
+    <header>
+    {% block nav %}
+    <div class="navbar-fixed z-depth-3">
+    <nav class="light-blue accent-4" role="navigation">
+        <div class="nav-wraper container click-to-toggle">
+            <a href="{{url_for('main.index')}}" class="brand-logo">
+                staneyffer
+            </a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="{{url_for('main.index')}}">
+                    <i class="left material-icons">home</i>主页</a></li>
+                <li><a href="{{url_for('post.get_archive')}}">
+                    <i class="left material-icons">library_books</i>归档</a></li>
+                <li><a href="{{url_for('auth.auth_get_user')}}">
+                    <i class="left material-icons large">person</i>About</a></li>
+                <li><a href="#modal1" class="modal-trigger">
+                    <i class="left material-icons large">link</i>友链</a></li>
+                {% if current_user.can(Permission.ADMINISTER) %}
+                <li><a href="{{url_for('post.upload')}}">
+                    <i class="left material-icons large">file_upload</i>写文章</a></li>
+                {% endif %}
+
+                {% if current_user.is_authenticated %}
+                <ul class="dropdown-content" id="dropdown">
+                    <li>
+                        <a href="" class="valign-wrapper">
+                            <img class="responsive-img" src="{{current_user.img_url}}">
+                            <span class="valign">
+                                {{current_user.username}}&nbsp;&nbsp;{{("("+current_user.name+")") if current_user.name}}
+                            </span>
+                        </a>
+                    </li>
+                    <li><a href="{{url_for('auth.auth_get_user')}}">个人资料</a></li>
+                    <li><a href="{{url_for('auth.change_password')}}">更改密码</a></li>
+                    <li><a href="{{url_for('auth.logout') }}">注销……</a></li>
+                </ul>
+                <li><a class="dropdown-button" href="#!" data-activates="dropdown">
+                {{current_user.username}}<i class="material-icons right">arrow_drop_down</i></a></li>
+                {% endif %}
+            </ul>
+            <a href="#" id="to_nav" data-activates="my_slide" class="button-collapse"><i class="material-icons">menu</i></a>
+        </div>
+    </nav>
+    </div>
+    {% endblock nav %}
+
+    {% include 'side-nav.html' %}
+    {#
+    <ul id="my_slide" class="side-nav show-on-large">
+      <div class="card">
+        <div class="card-image">
+          <img class="circle" src="http://127.0.0.1:5000/_uploads/files/about_me1_1.jpg">
+        </div>
+        <div class="card-content">
+          <p>I am a very simple card. I am good at containing small bits of information.
+          I am convenient because I require little markup to use effectively.</p>
+        </div>
+        <div class="card-action">
+          <a href="#">This is a link</a>
+        </div>
+      </div>
+    </ul>
+    #}
+    </header>
+    {% endblock header %}
+
+    {% block main %}
+    <main>
+    <div class="container" id="base_container">
+        {% block content -%}
+            {% block page_content %}
+
+            {% endblock %}
+        {%- endblock content %}
+    </div>
+    {% block editor %}
+
+    {% endblock editor %}
+
+    {% block friend_link %}
+        {% include 'auth/_friend_link.html' %}
+    {% endblock friend_link %}
+    </main>
+    {% endblock main %}
+
+
+    {% block footer %}
+    <footer class="page-footer white">
+        <div class="divider"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col s5 m5">
+            <p class="black-text">基于<a class="" href="http://flask.pocoo.org/" target="_blank">Flask</a>
+                及<a class="" href="http://materializecss.com/" target="_blank">Materialize</a>
+                搭建</p>
+          </div>
+          <div class="col s6 m6">
+            <p class="right center-align black-text">文章编辑与渲染采用<a href="https://pandao.github.io/editor.md/" target="_blank">editor.md</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="footer-copyright grey lighten-5">
+        <div class="container row">
+            <div class="col s3 m3">
+                <p class="black-text">Copyright © 2017
+                    <a class="" href="{{url_for('main.index')}}">staneyffer</a></p></div>
+            <div class="col s7 m7">
+            <p class="black-text">若无特殊说明，本网站所有文章均采用
+                <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank">
+                知识共享署名-相同方式共享 4.0 国际许可协议</a>进行授权</p>
+            </div>
+            <div class="col s2 m2">
+                <p><a class="right" href="#" target="_blank"> MIT license.</a></p></div>
+        </div>
+      </div>
+    </footer>
+    {% endblock footer %}
+
+    {% block script %}
+    <!--Import jQuery before materialize.js-->
+        {% assets "main_js" %}
+                <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+        {% endassets %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
+        <script id="-cdnjs-cloudflare-com-ajax-libs-KaTeX-0-3-0-katex-min" type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.3.0/katex.min.js"></script>
+
+    {% endblock script %}
+
+{% endblock body %}
+</body>
+</html>

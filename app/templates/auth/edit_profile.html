@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% import "_wtf.html" as wtf %}
+
+{% block title %}编辑信息 | {{super()}} {% endblock %}
+
+{% block style %}
+    {{super()}}
+{% endblock style %}
+
+{% block header %}
+    {% block nav %}
+    {{super()}}
+    {% endblock %}
+{% endblock %}
+
+{% block editor %}
+
+    <div class="row">
+    <h3 class="center-align">编辑文章</h3>
+    <form method="post" action="{{url_for('.edit_profile', id=user.id) }}" class="col s12">
+        {{ form.hidden_tag() }}
+        <div class="container">
+        <div class="form-group">
+
+            {% if form.username.data %}
+                {{ wtf.form_field(form.username, value=form.username.data, class="validate") }}
+            {% else %}
+                {{ wtf.form_field(form.username, class="validate") }}
+            {% endif %}
+
+            {% if form.name.data %}
+                {{ wtf.form_field(form.name, value=form.name.data, class="validate") }}
+            {% else %}
+                {{ wtf.form_field(form.name, class="validate") }}
+            {% endif %}
+
+            {% if form.img_url.data %}
+                {{ wtf.form_field(form.img_url, value=form.img_url.data, class="validate") }}
+            {% else %}
+                {{ wtf.form_field(form.img_url, class="validate") }}
+            {% endif %}
+
+        </div>
+        </div>
+
+        <div class="form-group">
+            {{ form.about_me.label }}
+            {% if form.about_me.errors %}
+                {% for e in form.about_me.errors %}
+                    <p class="help-block">{{ e }}</p>
+                {% endfor %}
+            {% endif %}
+            <div id="editormd_edit_profile" class="form-control">
+                {{ form.about_me(style="display:none;", value="# md") }}
+            </div>
+        </div>
+
+        <div class="col offset-s9">
+        <button id="submit" class="btn waves-effect waves-light" value="提交" type="submit" name="action">提交
+            <i class="material-icons right">send</i>
+        </button>
+        </div>
+    </form>
+    </div>
+
+
+{% endblock editor%}
+
+
+{% block script %}
+    {{super()}}
+    {% assets "editormd_js" %}
+            <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
+    <script type="text/javascript">
+        var testEditor_edit;
+        $(function () {
+            testEditor_edit = editormd("editormd_edit_profile", {
+                width: "90%",
+                height: 640,
+                syncScrolling: "single",
+                path: "{{url_for('static',filename='editormd/lib/')}}",
+                theme : "default",      //工具栏主题
+                previewTheme : "default",
+                editorTheme : "default",
+                codeFold : true,
+                saveHTMLToTextarea : true,    // 保存 HTML 到 Textarea
+                searchReplace : true,
+                emoji : true,
+                taskList : true,
+                tocm: true,         // Using [TOCM]
+                tex : true,                   // 开启科学公式TeX语言支持，默认关闭
+                flowChart : true,
+                sequenceDiagram: true,      // 开启时序/序列图支持，默认关闭,
+                imageUpload : true,
+                imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                imageUploadURL : "{{url_for('post.img_upload')}}",
+
+                onload : function() {
+                    console.log('onload', this);
+                }
+            });
+            //document.getElementById("md_data").defaultValue = title;
+        });
+        //$("#md_data").load("{{url_for('static',filename='editormd/examples/test.md')}}");
+
+        $("#md_data").load("{{url_for('.get_about_me', id=user.id)}}");
+    </script>
+{% endblock script %}
