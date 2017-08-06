@@ -1,0 +1,51 @@
+{% extends "index.html" %}
+{% block title %}
+    归档 | {{super()}}
+{% endblock title %}
+
+{% block posts %}
+
+{% for arch_posts in archive %}
+    <ul class="collapsible popout" data-collapsible="accordion">
+        <li>
+            <span class="badge new teal lighten-1" data-badge-caption="">
+                {{arch_posts|length}}</span>
+          <div class="collapsible-header"><i class="material-icons">access_time</i>
+              {{arch_posts[0].timestamp.year}}年{{arch_posts[0].timestamp.month}}月{{arch_posts[0].timestamp.day}}日
+          </div>
+          <div class="collapsible-body">
+              <ul class="collection">
+                {% for post in arch_posts %}
+                <li href="#" class="collection-item">
+                <div class="row">
+                <div class="col m3 s3 s12">
+                    <a href="{{url_for('post.show_post', id=post.id)}}" class="black-text">
+                        {{post.title}}</a></div>
+                <div class="col m3 s3 s12">
+                    <a href="{{url_for('post.get_category', id=post.category.id)}}" class="blue-text">
+                        <span><i class="material-icons tiny">chrome_reader_mode</i></span>
+                        {{post.category.name}}</a></div>
+                <div class="col m6 s4 s12">
+                    {% for tag in post.tags.all() %}
+                    <a href="{{url_for('post.get_tag', id=Tag.query.filter_by(id=tag.tag_id).first().id)}}" class="blue-text">
+                        <span><i class="material-icons tiny">local_offer</i></span>
+                        {{Tag.query.filter_by(id=tag.tag_id).first().name}}</a>
+                    {% endfor %}</div>
+                </div>
+                </li>
+                {% endfor %}
+              </ul>
+          </div>
+        </li>
+    </ul>
+{% endfor %}
+{% endblock posts %}
+
+{% block script %}
+    {{super()}}
+<script>
+  $(document).ready(function(){
+    $('.collapsible').collapsible();
+  });
+</script>
+{% endblock script %}

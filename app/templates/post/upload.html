@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% import "_wtf.html" as wtf %}
+
+{% block title %}编辑文章 | {{super()}}{% endblock %}
+
+{% block style %}
+    {{super()}}
+{% endblock style %}
+
+{% block header %}
+    {% block nav %}
+    {{super()}}
+    {% endblock %}
+{% endblock %}
+
+{% block editor %}
+    <div class="row">
+    <h3 class="center-align">编辑文章</h3>
+    <form method="post" action="{{ url_for('.upload') }}" class="col s12">
+        {{ form.hidden_tag() }}
+        <div class="container">
+        <div class="form-group">
+            {% if title %}
+                {{ wtf.form_field(form.title, value="{{title}}", class="validate") }}
+            {% else %}
+                {{ wtf.form_field(form.title, class="validate") }}
+            {% endif %}
+
+            {% if spc %}
+                {{ wtf.form_field(form.spc, value="{{spc}}", class="validate") }}
+            {% else %}
+                {{ wtf.form_field(form.spc, class="validate") }}
+            {% endif %}
+
+            {% if category %}
+                {{ wtf.form_field(form.category, value="{{category}}", class="validate") }}
+            {% else %}
+                {{ wtf.form_field(form.category, class="validate") }}
+            {% endif %}
+
+            {% if tags %}
+                {{ wtf.form_field(form.tags, value="{{tags}}", class="validate") }}
+            {% else %}
+                {{ wtf.form_field(form.tags, class="validate") }}
+            {% endif %}
+
+            {% if summary %}
+                {{ wtf.form_field(form.summary, value="{{summary}}", class="materialize-textarea") }}
+            {% else %}
+                {{ wtf.form_field(form.summary, class="materialize-textarea") }}
+            {% endif %}
+        </div>
+        </div>
+
+        <div class="form-group">
+            {{ form.md_data.label }}
+            {% if form.md_data.errors %}
+                {% for e in form.md_data.errors %}
+                    <p class="help-block">{{ e }}</p>
+                {% endfor %}
+            {% endif %}
+            <div id="editormd_upload" class="form-control">
+                {{ form.md_data(style="display:none;", value="# md") }}
+            </div>
+        </div>
+        <div class="col offset-s9">
+        <button id="submit" class="btn waves-effect waves-light" value="提交" type="submit" name="action">提交
+            <i class="material-icons right">send</i>
+        </button>
+        </div>
+    </form>
+    </div>
+{% endblock editor%}
+
+{% block script %}
+    {{super()}}
+    {% assets "editormd_js" %}
+        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
+    <script type="text/javascript">
+        var testEditor_upload;
+        $(function () {
+            testEditor_upload = editormd("editormd_upload", {
+                width: "90%",
+                height: 640,
+                syncScrolling: "single",
+                path: "{{url_for('static',filename='editormd/lib/')}}",
+                theme : "default",
+                previewTheme : "default",
+                //editorTheme : "pastel-on-dark",
+                codeFold : true,
+                saveHTMLToTextarea : true,    // 保存 HTML 到 Textarea
+                searchReplace : true,
+                emoji : true,
+                taskList : true,
+                tocm: true,         // Using [TOCM]
+                tex : true,                   // 开启科学公式TeX语言支持，默认关闭
+                flowChart : true,
+                sequenceDiagram: true,      // 开启时序/序列图支持，默认关闭,
+                imageUpload : true,
+                imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                imageUploadURL : "{{url_for('post.img_upload')}}",
+
+                onload : function() {
+                    console.log('onload', this);
+                }
+            });
+        });
+    </script>
+
+{% endblock script %}

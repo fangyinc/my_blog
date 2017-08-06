@@ -1,0 +1,18 @@
+{% extends "index.html" %}
+{% import "_pagination_id.html" as p_macros %}
+
+{% block style %}
+    {{super()}}
+    {% assets "show_editormd_css" %}
+        <link rel="stylesheet" href="{{ ASSET_URL }}">
+    {% endassets %}
+{% endblock style %}
+
+{% block posts %}
+    {% include 'post/_post_list.html' %}
+    {% if pagination %}
+    <div class="pagination">
+        {{ p_macros.pagination_widget(pagination, id, site_url) }}
+    </div>
+    {% endif %}
+{% endblock posts %}

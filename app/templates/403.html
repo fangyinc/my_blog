@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Forbidden | {{super()}}{% endblock %}
+
+{% block header %}
+    {% block nav %}
+    {{super()}}
+    {% endblock %}
+{% endblock %}
+{% block page_content %}
+    <div class="page-header">
+        <h2>这是权限dog才有的操作哟(σ≧∀≦)σ</h2>
+    </div>
+{% endblock %}

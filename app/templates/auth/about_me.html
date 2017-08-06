@@ -1,0 +1,63 @@
+{% extends "index.html" %}
+{% block title %}
+    个人资料 | staneyffer
+{% endblock title %}
+{% block style %}
+    {{super()}}
+    {% assets "show_editormd_css" %}
+        <link rel="stylesheet" href="{{ ASSET_URL }}">
+    {% endassets %}
+{% endblock style %}
+{% block posts %}
+
+    <div class="card  z-depth-2">
+        <div class="card-image row">
+            <div class="divider"></div>
+            <div class="section"></div>
+            <div class="col s6 offset-s3">
+          <img class="materialboxed z-depth-3" src="{{user.img_url}}">
+            </div>
+        </div>
+        <div id="test-editormd-view" class="card-content">
+            <h4 class="center-align">{{user.name}}</h4>
+            <textarea id="append-test" style="display:none;">
+                {{user.about_me}}
+            </textarea>
+        </div>
+        {#
+        <div class="card-action">
+
+        </div>
+        #}
+        {% if current_user.can(Permission.ADMINISTER) %}
+            <a href="{{url_for('auth.edit_profile', id=user.id)}}"class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">edit</i></a>
+        {% endif %}
+
+    </div>
+
+
+{% endblock %}
+
+{% block script %}
+    {{super()}}
+    {% assets "show_editormd_js" %}
+            <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
+
+    <script type="text/javascript">
+        $(function() {
+            var testEditormdView;
+            testEditormdView = editormd.markdownToHTML("test-editormd-view", {
+                htmlDecode      : "style,script,iframe",  // you can filter tags decode
+                codeFold        : true,
+                emoji           : true,
+                tocm            : true,
+                taskList        : true,
+                tex             : true,  // 默认不解析
+                flowChart       : true,  // 默认不解析
+                sequenceDiagram : true  // 默认不解析
+            });
+        });
+    </script>
+
+{% endblock script %}
