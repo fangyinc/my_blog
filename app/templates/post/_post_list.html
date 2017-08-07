@@ -1,5 +1,5 @@
 {% for post in posts %}
-    <div class="card  z-depth-2 card-panel hoverable">
+    <div class="card  z-depth-2  hoverable">
         <div class="card-content "><a href="{{url_for('post.show_post', id=post.id)}}">
           <span class="card-title black-text">{{post.title}}</span>
             <p class="black-text">{{post.summary}}</p></a><br>
