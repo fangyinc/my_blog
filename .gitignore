@@ -112,4 +112,4 @@ ENV/
 将删除 tests/
 将删除 app/static/gen/
 将删除 app/static/images/kanshan_blog.jpg
-!/app/static/js/
+/app/static/
