@@ -37,11 +37,11 @@ def prepare_deploy():
     push()
 
 def deploy():
-    code_dir = '/home/www/cnsoft_image'
+    code_dir = '/home/www/my_blog'
     with settings(warn_only=True):
         if run("test -d %s" % code_dir).failed:
-            sudo("git clone git@github.com:staneyffer/cnsoft_image.git %s" % code_dir)
+            sudo("git clone git@github.com:staneyffer/my_blog.git %s" % code_dir)
     with cd(code_dir):
         sudo("git pull")
-        sudo("systemctl restart  supervisor")
+        sudo("systemctl restart my_blog.service")
         sudo("systemctl restart nginx")
