@@ -40,15 +40,23 @@
             <a href="{{url_for('post.edit_post', id=post.id)}}"class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">edit</i></a>
         {% endif %}
     </div>
-
-    <div class="card z-depth-2">
-        <div class="card-content">
-        <!-- UY BEGIN -->
-        <div id="uyan_frame"></div>
-        <script type="text/javascript" src="https://v2.uyan.cc/code/uyan.js?uid=2140779"></script>
-        <!-- UY END -->
+    {# 评论系统　#}
+    <div class="card-panel z-depth-2">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC8zMDA0OC82NjEy">
+            <script type="text/javascript">
+           (function(d, s) {
+               var j, e = d.getElementsByTagName(s)[0];
+               if (typeof LivereTower === 'function') { return; }
+               j = d.createElement(s);
+               j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+               j.async = true;
+               e.parentNode.insertBefore(j, e);
+           })(document, 'script');
+            </script>
+            <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
         </div>
     </div>
+
 {% endblock %}
 
 {% block script %}
