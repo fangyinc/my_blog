@@ -6,3 +6,14 @@ a.my-back-to-top {  display: none;  width: 60px;  height: 60px;  text-indent: -9
 a:hover.my-back-to-top {
     background-color: #27AE61;
 }
+
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}

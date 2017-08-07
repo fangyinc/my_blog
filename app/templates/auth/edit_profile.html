@@ -34,6 +34,12 @@
                 {{ wtf.form_field(form.name, class="validate") }}
             {% endif %}
 
+            {% if form.signature.data %}
+                {{ wtf.form_field(form.signature, value=form.signature.data, class="validate") }}
+            {% else %}
+                {{ wtf.form_field(form.signature, class="validate") }}
+            {% endif %}
+
             {% if form.img_url.data %}
                 {{ wtf.form_field(form.img_url, value=form.img_url.data, class="validate") }}
             {% else %}

@@ -100,6 +100,7 @@ def edit_profile(id):
 		user.username = form.username.data
 		user.name = form.name.data
 		user.img_url = form.img_url.data
+		user.signature = form.signature.data
 		user.about_me = form.about_me.data.strip(' ')
 		db.session.add(user)
 		flash('用户信息已更新')
@@ -107,6 +108,7 @@ def edit_profile(id):
 	form.username.data = user.username
 	form.name.data = user.name
 	form.img_url.data = user.img_url
+	form.signature.data = user.signature
 	form.about_me.data = user.about_me
 	return render_template('auth/edit_profile.html', form=form, user=user)
 

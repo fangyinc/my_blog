@@ -8,12 +8,13 @@
 {% for arch_posts in archive %}
     <ul class="collapsible popout" data-collapsible="accordion">
         <li>
+            {% if arch_posts %}
             <span class="badge new teal lighten-1" data-badge-caption="">
                 {{arch_posts|length}}</span>
-          <div class="collapsible-header"><i class="material-icons">access_time</i>
+            <div class="collapsible-header"><i class="material-icons">access_time</i>
               {{arch_posts[0].timestamp.year}}年{{arch_posts[0].timestamp.month}}月{{arch_posts[0].timestamp.day}}日
-          </div>
-          <div class="collapsible-body">
+             </div>
+            <div class="collapsible-body">
               <ul class="collection">
                 {% for post in arch_posts %}
                 <li href="#" class="collection-item">
@@ -36,6 +37,7 @@
                 {% endfor %}
               </ul>
           </div>
+            {% endif %}
         </li>
     </ul>
 {% endfor %}

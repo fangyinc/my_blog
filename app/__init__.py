@@ -46,20 +46,11 @@ def create_app(config_name):
 	from .main import main as main_blueprint
 	app.register_blueprint(main_blueprint)
 
-	from .admin import admin as admin_blueprint
-	app.register_blueprint(admin_blueprint, url_prefix='/admin')
-
 	from .auth import auth as auth_blueprint
 	app.register_blueprint(auth_blueprint, url_prefix='/auth')
 
-	from .category import category as category_blueprint
-	app.register_blueprint(category_blueprint, url_prefix='/category')
-
 	from .post import post as post_blueprint
 	app.register_blueprint(post_blueprint, url_prefix='/post')
-
-	from .tag import tag as tag_blueprint
-	app.register_blueprint(post_blueprint, url_prefix='/tag')
 
 	from .tools import tools as tools_blueprint
 	app.register_blueprint(tools_blueprint, url_prefix='/tools')

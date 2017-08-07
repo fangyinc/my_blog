@@ -6,7 +6,6 @@ from wtforms.validators import Required, Length, Email, Regexp, EqualTo
 from wtforms import ValidationError
 from ..models import User
 
-
 class LoginForm(FlaskForm):
 	email = StringField('邮箱', validators=[Required(), Length(1, 64),
 											 Email()])
@@ -49,6 +48,6 @@ class EditProfileAdminForm(FlaskForm):
 	#age = StringField('年龄', validators=[Length(0, 64)])
 	#location = StringField('地址', validators=[Length(0, 64)])
 	img_url = StringField('头像url')
+	signature = StringField('个性签名')
 	about_me = TextAreaField('')
-	#signature = TextAreaField('个性签名')
 	#submit = SubmitField('提交')

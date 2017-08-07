@@ -9,6 +9,15 @@
           <a href="#!email"><span class="white-text email">staneyffer@gmail.com</span></a>
         </div>
     </li>
+    <li>        {#搜索框#}
+        <form action="#" method="GET">
+          <div class="input-field">
+            <input class="center-align" placeholder="搜索" id="_imgSearch" type="search" name="searchText" required>
+              <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+            <i class="material-icons">close</i>
+          </div>
+        </form>
+    </li>
     <li><a href="{{url_for('main.index')}}" style="padding-left: 16px;">
         <i class="material-icons">home</i>主页</a></li>
     <li><a href="{{url_for('auth.auth_get_user')}}" style="padding-left: 16px;">
@@ -62,13 +71,14 @@
                 {% for arch_posts in archive %}
                 <ul class="collapsible popout" data-collapsible="accordion">
                     <li>
+                        {% if arch_posts %}
                         <span class="badge new teal lighten-1" data-badge-caption="">
                             {{arch_posts|length}}</span>
-                      <div class="collapsible-header blue-text"><i class="material-icons">access_time</i>
-                          {{arch_posts[0].timestamp.year}}年{{arch_posts[0].timestamp.month}}月
-                      </div>
-                      <div class="collapsible-body">
-                          <ul>
+                        <div class="collapsible-header blue-text"><i class="material-icons">access_time</i>
+                              {{arch_posts[0].timestamp.year}}年{{arch_posts[0].timestamp.month}}月
+                        </div>
+                        <div class="collapsible-body">
+                            <ul>
                             {% for post in arch_posts %}
                             <li href="#" class="collection-item">
                             <div class="col m3 s3 s12">
@@ -77,7 +87,8 @@
                             </li>
                             {% endfor %}
                           </ul>
-                      </div>
+                        </div>
+                        {% endif %}
                     </li>
                 </ul>
                 {% endfor %}

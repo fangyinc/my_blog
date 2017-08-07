@@ -103,3 +103,12 @@ ENV/
 /migrations
 
 # md file
+!/app/static/editormd/lib/
+将删除 .idea/inspectionProfiles/
+将删除 .idea/misc.xml
+将删除 .idea/modules.xml
+将删除 .idea/my_blog.iml
+将删除 .idea/workspace.xml
+将删除 tests/
+将删除 app/static/gen/
+将删除 app/static/images/kanshan_blog.jpg

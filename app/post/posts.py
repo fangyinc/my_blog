@@ -14,7 +14,7 @@ class save_post:
 			self.title = title.data
 			self.spc = spc.data
 			self.category = category.data
-			self.tags = tags.data.strip().split(' ')
+			self.tags = [s for s in tags.data.strip().split(' ') if s != '']
 			self.summary = summary.data
 			self.md_data = md_data.data
 			self.html_data = html_data.data
@@ -34,8 +34,14 @@ class save_post:
 			#post.author = User.query.filter_by(id=self.author_id).first()
 
 			tags = self.get_tags()
-			old_tags = post.tags.all()
+			#old_tags = post.tags.all()
+			old_tags = Tag.query.join(R_Post_Tag, R_Post_Tag.tag_id == Tag.id).filter_by(post_id=post.id).all()
 			ax_tags = [a for a in old_tags if a not in tags]
+			for tag in ax_tags:
+				t = Tag.query.filter_by(name=tag.name).first()
+				r = R_Post_Tag.query.filter_by(tag_id=t.id, post_id=post.id).first()
+				db.session.delete(r)
+				db.session.commit()
 			for tag in tags:
 				if post.tags.filter_by(tag_id=tag.id).first() is None:
 					r = R_Post_Tag(post_id=post.id, tag_id=tag.id)
@@ -84,6 +90,8 @@ class Archive:
 	def get_post(self):
 		re_posts = [[]]
 		posts = self.posts
+		if len(posts) == 0:
+			return re_posts
 		re_posts[0].append(posts[0])
 		j = 0
 		for i in range(1, len(posts)):
