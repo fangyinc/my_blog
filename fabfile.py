@@ -42,6 +42,7 @@ def deploy():
         if run("test -d %s" % code_dir).failed:
             sudo("git clone git@github.com:staneyffer/my_blog.git %s" % code_dir)
     with cd(code_dir):
-        sudo("git pull")
+        run("whoami")
+        run("git pull")
         sudo("systemctl restart my_blog.service")
         sudo("systemctl restart nginx")
