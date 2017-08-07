@@ -56,8 +56,10 @@ def img_upload():
 	'''
 	if request.method == 'POST':
 		try:
+			import hashlib, time
+			name = hashlib.md5(('staneyffer' + str(time.time())).encode('utf-8')).hexdigest()[:15]
 			file = request.files['editormd-image-file']
-			filename = files.save(file)
+			filename = files.save(file, name=name+'.')
 			file_url = files.url(filename)
 		except Exception as e:
 			return jsonify({'success': 0, 'message': e, 'url': ''})
