@@ -66,7 +66,6 @@ class User(UserMixin, db.Model):
 	img_url = db.Column(db.String(256), unique = True, index = True)
 	#bg_img_url = db.Column(db.String(256), unique = True, index = True)
 	posts = db.relationship('Post', backref='author', lazy='dynamic')
-	hello = db.relationship('Post', backref='author', lazy='dynamic')
 
 
 	def __init__(self, **kwargs):
