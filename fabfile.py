@@ -44,5 +44,5 @@ def deploy():
     with cd(code_dir):
         run("whoami")
         run("git pull")
-        sudo("systemctl restart my_blog.service")
+        sudo("systemctl restart my_blog")
         sudo("systemctl restart nginx")
