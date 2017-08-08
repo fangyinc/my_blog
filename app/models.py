@@ -64,7 +64,9 @@ class User(UserMixin, db.Model):
 	last_seen = db.Column(db.DateTime(), default=datetime.utcnow)
 	avatar_hash = db.Column(db.String(32))
 	img_url = db.Column(db.String(256), unique = True, index = True)
+	#bg_img_url = db.Column(db.String(256), unique = True, index = True)
 	posts = db.relationship('Post', backref='author', lazy='dynamic')
+	hello = db.relationship('Post', backref='author', lazy='dynamic')
 
 
 	def __init__(self, **kwargs):
