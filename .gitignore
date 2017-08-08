@@ -112,4 +112,5 @@ ENV/
 将删除 app/static/gen/
 将删除 app/static/images/kanshan_blog.jpg
 /app/static/editormd/
+/app/static/images/
 
