@@ -177,7 +177,7 @@ def get_archive():
 	my_dict = value.keys()
 	return render_template('post/archive.html', **my_dict)
 
-@post.route('/category/delete<int:id>')
+@post.route('/category/delete/<int:id>')
 @admin_required
 def delete_cat(id):
 	item = Category.query.get_or_404(id)
@@ -186,7 +186,7 @@ def delete_cat(id):
 	return redirect(url_for('main.index'))
 
 
-@post.route('/tag/delete<int:id>')
+@post.route('/tag/delete/<int:id>')
 @admin_required
 def delete_tag(id):
 	item = Tag.query.get_or_404(id)
@@ -195,10 +195,19 @@ def delete_tag(id):
 	return redirect(url_for('main.index'))
 
 
-@post.route('/spc/delete<int:id>')
+@post.route('/spc/delete/<int:id>')
 @admin_required
 def delete_spc(id):
 	item = Spc.query.get_or_404(id)
+	db.session.delete(item)
+	db.session.commit()
+	return redirect(url_for('main.index'))
+
+
+@post.route('/delete/<int:id>')
+@admin_required
+def delete_post(id):
+	item = Post.query.get_or_404(id)
 	db.session.delete(item)
 	db.session.commit()
 	return redirect(url_for('main.index'))

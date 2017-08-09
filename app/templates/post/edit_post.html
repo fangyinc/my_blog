@@ -18,10 +18,15 @@
 {% block editor %}
 
     <div class="row">
-    <h3 class="center-align">编辑文章</h3>
+        <div class="container">
+            <h3 class="center-align">编辑文章</h3>
+            <a class="right" href="{{url_for('post.delete_post', id=post.id)}}">
+            <i class="material-icons">delete</i>删除</a>
+        </div>
     <form method="post" action="{{url_for('.edit_post', id=post.id) }}" class="col s12">
         {{ form.hidden_tag() }}
         <div class="container">
+
         <div class="form-group">
             {# title 等默认是form.title.data #}
             {% if title %}
@@ -49,6 +54,7 @@
             {% endif %}
 
             {{ wtf.form_field(form.summary, value="hhee", class="materialize-textarea") }}
+
         </div>
         </div>
 

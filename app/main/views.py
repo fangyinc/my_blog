@@ -41,8 +41,8 @@ def admin_images(page):
 
 	return render_template('admin/admin_images.html', pagination=pagination,
 						   files_list=files_list, files=files)
-@main.route('/delete-image/<filename>')
 
+@main.route('/delete-image/<filename>')
 @admin_required
 def delete_image(filename):
 	file_path = files.path(filename)

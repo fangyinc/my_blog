@@ -34,6 +34,7 @@ def logout():
 
 
 @auth.route('/register', methods=['GET', 'POST'])
+@admin_required		#注册保护
 def register():
 	form = RegistrationForm()
 	if form.validate_on_submit():

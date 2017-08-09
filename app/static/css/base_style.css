@@ -7,13 +7,15 @@ a:hover.my-back-to-top {
     background-color: #27AE61;
 }
 
-
 body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
+    overflow-x: hidden;
 }
 
 main {
     flex: 1 0 auto;
+    overflow-x: hidden;
+
 }
