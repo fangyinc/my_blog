@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros %}
+
+{% block title %}相册 | {{super()}}{% endblock %}
+
+{% block header %}
+    {% block nav %}
+    {{super()}}
+    {% endblock %}
+{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        {% for file in files_list %}
+        <div id="image_list" class="col s6">
+          <div class="card">
+            <div class="card-image">
+              <img src={{files.url(file)}} class="materialboxed">
+              <span class="card-title">{{file}}</span>
+                {% if current_user.can(Permission.ADMINISTER) %}
+                <a href="{{url_for('main.delete_image', filename=file)}}"
+                   class="btn-floating halfway-fab waves-effect waves-light blue">
+                    <i class="material-icons">delete</i></a>
+                {% endif %}
+            </div>
+            <div class="card-content">
+              {{files.url(file)}}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% if pagination %}
+    <div class="pagination">
+        {{ macros.pagination_widget(pagination, 'main.admin_images') }}
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block script %}
+    {{super()}}
+    <script>
+      $(document).ready(function(){
+        $('.materialboxed').materialbox();
+      });
+    </script>
+{% endblock script %}
