@@ -2,30 +2,26 @@
 <div id="modal1" class="modal">
     <div class="modal-content">
         <h4>友情链接</h4>
+        {% for f in friends %}
         <ul class="collection">
             <li class="collection-item avatar">
-                <a href="https://angovia.me/" target="_blank">
-                <img src="https://chengfangyin.cn/_uploads/files/jiashuaowei_blog_avatar.jpeg" alt="" class="circle">
-                <span class="title black-text">贾舒奥维</span>
-                <p>软工大神
-                </p>
+                <a href={{f.site_url}} target="_blank">
+                <img src={{f.img_url}} alt="" class="circle">
+                <span class="title black-text">{{f.name}}</span>
+                <p>{{f.about_me}}</p>
                 </a>
-              <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+                <div>
+                {% if current_user.can(Permission.ADMINISTER) %}
+                    <a href="{{url_for('auth.edit_friend', id=f.id)}}"
+                       class="secondary-content btn-floating halfway-fab waves-effect waves-light blue">
+                        <i class="material-icons">edit</i></a>
+                {% else %}
+                    <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+                {% endif %}
+                </div>
             </li>
         </ul>
-
-        <ul class="collection">
-            <li class="collection-item avatar">
-                <a href="https://blog.yoitsu.moe/" target="_blank">
-                <img src="https://chengfangyin.cn/_uploads/files/zhangjintao_blog_wiki.jpg" alt="" class="circle">
-                <span class="title black-text">萌狼</span>
-                <p>计科大佬
-                </p>
-                </a>
-              <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-            </li>
-        </ul>
-
+        {% endfor %}
     </div>
     <div class="modal-footer">
       <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>

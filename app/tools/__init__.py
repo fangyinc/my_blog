@@ -4,4 +4,4 @@ from flask import Blueprint
 
 tools = Blueprint('tools', __name__)
 
-from . import views
+from . import views, jinja_keys, pagination

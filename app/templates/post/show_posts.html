@@ -9,6 +9,37 @@
 {% endblock style %}
 
 {% block posts %}
+    <div class="card lighten-5 z-depth-2 hoverable center-align">
+      <div class="row valign-wrapper">
+        <div class="col s12">
+          <h4 class="black-text">
+              {% if the_category %}
+              分类"{{the_category.name}}"中共有{{count}}篇文章
+              {% elif the_spc %}
+              专栏"{{the_spc.name}}"中共有{{count}}篇文章
+              {% else %}
+              标签"{{the_tag.name}}"中共有{{count}}篇文章
+              {% endif %}
+          </h4>
+        </div>
+        <div class="card-content">
+            {% if current_user.can(Permission.ADMINISTER) and the_category%}
+                <a href="{{url_for('post.delete_cat', id=the_category.id)}}" class="btn-floating halfway-fab waves-effect waves-light blue">
+                    <i class="material-icons">delete</i></a>
+            {% endif %}
+
+            {% if current_user.can(Permission.ADMINISTER) and the_spc%}
+                <a href="{{url_for('post.delete_spc', id=the_spc.id)}}" class="btn-floating halfway-fab waves-effect waves-light blue">
+                    <i class="material-icons">delete</i></a>
+            {% endif %}
+            {% if current_user.can(Permission.ADMINISTER) and the_tag%}
+                <a href="{{url_for('post.delete_tag', id=the_tag.id)}}" class="btn-floating halfway-fab waves-effect waves-light blue">
+                    <i class="material-icons">delete</i></a>
+            {% endif %}
+        </div>
+
+      </div>
+    </div>
     {% include 'post/_post_list.html' %}
     {% if pagination %}
     <div class="pagination">

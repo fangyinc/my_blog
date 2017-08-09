@@ -64,7 +64,7 @@ class User(UserMixin, db.Model):
 	last_seen = db.Column(db.DateTime(), default=datetime.utcnow)
 	avatar_hash = db.Column(db.String(32))
 	img_url = db.Column(db.String(256), unique = True, index = True)
-	#bg_img_url = db.Column(db.String(256), unique = True, index = True)
+	bg_img_url = db.Column(db.String(256), unique = True, index = True)
 	posts = db.relationship('Post', backref='author', lazy='dynamic')
 
 
@@ -157,6 +157,8 @@ class R_Post_Tag(db.Model):
 	post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), primary_key=True)
 	tag_id = db.Column(db.Integer, db.ForeignKey('tags.id'), primary_key=True)
 
+	def __repr__(self):
+		return '<R_Post_Tag %r>' % str(self.post_id) + str(self.tag_id)
 
 class Post(db.Model):
 	__tablename__ = 'posts'
@@ -220,6 +222,8 @@ class Post(db.Model):
 			raise ValidationError('post does not have a body')
 		return Post(body=body)
 
+	def __repr__(self):
+		return '<Post %r>' % self.title
 
 db.event.listen(Post.body, 'set', Post.on_changed_body)
 
@@ -228,6 +232,9 @@ class Category(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(64), index=True, unique=True)
 	posts = db.relationship('Post', backref='category', lazy='dynamic')
+
+	def __repr__(self):
+		return '<Category %r>' % self.name
 
 class Tag(db.Model):
 	__tablename__ = 'tags'
@@ -241,9 +248,26 @@ class Tag(db.Model):
 							cascade='all, delete, delete-orphan',  # 销毁联接
 							)
 
+	def __repr__(self):
+		return '<Tag %r>' % self.name
+
 class Spc(db.Model):			#专栏
 	__tablename__ = 'spc'
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(128), index=True, unique=True)
 	timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 	posts = db.relationship('Post', backref='spc', lazy='dynamic')
+
+	def __repr__(self):
+		return '<Spc %r>' % self.name
+
+class Friend(db.Model):
+	__tablename__ = 'friend'
+	id = db.Column(db.Integer, primary_key=True)
+	name = db.Column(db.String(64), index=True)
+	site_url = db.Column(db.String(128), index=True, unique=True)
+	img_url = db.Column(db.String(128), index=True)
+	about_me = db.Column(db.String(500), index=True)
+
+	def __repr__(self):
+		return '<Friend %r>' % self.name

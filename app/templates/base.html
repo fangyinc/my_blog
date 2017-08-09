@@ -53,11 +53,6 @@
                     <i class="left material-icons large">person</i>About</a></li>
                 <li><a href="#modal1" class="modal-trigger">
                     <i class="left material-icons large">link</i>友链</a></li>
-                {% if current_user.can(Permission.ADMINISTER) %}
-                <li><a href="{{url_for('post.upload')}}">
-                    <i class="left material-icons large">file_upload</i>写文章</a></li>
-                {% endif %}
-
                 {% if current_user.is_authenticated %}
                 <ul class="dropdown-content" id="dropdown">
                     <li>

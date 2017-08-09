@@ -2,11 +2,11 @@
     <li>
         <div class="user-view">
           <div class="background">
-            <img src="https://chengfangyin.cn/_uploads/files/oss_test3.jpg">
+            <img src={{admin_user.bg_img_url}}>
           </div>
-          <a href="#!user"><img class="circle" src="https://chengfangyin.cn/_uploads/files/about_225.jpg"></a>
-          <a href="#!name"><span class="white-text name">程方银</span></a>
-          <a href="#!email"><span class="white-text email">staneyffer@gmail.com</span></a>
+          <a href="#!user"><img class="circle" src={{admin_user.img_url}}></a>
+          <a href="#!name"><span class="white-text name">{{admin_user.name}}</span></a>
+          <a href="#!email"><span class="white-text email">{{admin_user.email}}</span></a>
         </div>
     </li>
     <li>        {#搜索框#}

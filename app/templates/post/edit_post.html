@@ -23,7 +23,7 @@
         {{ form.hidden_tag() }}
         <div class="container">
         <div class="form-group">
-
+            {# title 等默认是form.title.data #}
             {% if title %}
                 {{ wtf.form_field(form.title, value=title, class="validate") }}
             {% else %}

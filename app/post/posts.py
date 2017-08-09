@@ -7,7 +7,6 @@ import time
 import hashlib
 from pypinyin import lazy_pinyin
 
-
 class save_post:
 	def __init__(self, title, spc, category, tags, summary, md_data, html_data):
 		try:
@@ -32,7 +31,8 @@ class save_post:
 			post.spc = self.get_spc()
 			post.summary = self.summary
 			#post.author = User.query.filter_by(id=self.author_id).first()
-
+			db.session.add(post)
+			db.session.commit()
 			tags = self.get_tags()
 			#old_tags = post.tags.all()
 			old_tags = Tag.query.join(R_Post_Tag, R_Post_Tag.tag_id == Tag.id).filter_by(post_id=post.id).all()
@@ -47,6 +47,8 @@ class save_post:
 					r = R_Post_Tag(post_id=post.id, tag_id=tag.id)
 					db.session.add(r)
 					db.session.commit()
+			db.session.add(post)
+			db.session.commit()
 		except:
 			print('error at sava')
 			raise

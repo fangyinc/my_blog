@@ -6,11 +6,11 @@ from flask_login import login_user, logout_user, login_required, current_user
 
 from . import auth
 from .. import db
-from ..models import User, Category, Spc, Tag, Post
-from .forms import LoginForm, RegistrationForm, ChangePasswordForm,EditProfileAdminForm
+from ..models import User, Category, Spc, Tag, Post,Friend
+from .forms import LoginForm, RegistrationForm, ChangePasswordForm,EditProfileAdminForm, FriendForm
 from ..decorators import author_required, admin_required
-#from app.post.post import Archive
 from ..post.posts import Archive
+from ..tools.jinja_keys import JinjaKeys
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
@@ -84,10 +84,12 @@ def get_about_me(id):
 
 @auth.route('/about-me')
 def auth_get_user():
-	cats = Category.query.all()
-	spcs = Spc.query.all()
-	user = User.query.get_or_404(1)
-	return render_template('auth/about_me.html', user=user, cats=cats, spcs=spcs, Tag=Tag)
+	user = User.query.filter_by(email='staneyffer@gmail.com').first()
+	value = JinjaKeys()
+	value.add_keys({'user': user})
+	my_dict = value.keys()
+
+	return render_template('auth/about_me.html', **my_dict)
 
 
 @auth.route('/edit-profile/<int:id>', methods=['GET', 'POST'])
@@ -100,6 +102,7 @@ def edit_profile(id):
 		user.username = form.username.data
 		user.name = form.name.data
 		user.img_url = form.img_url.data
+		user.bg_img_url = form.bg_img_url.data
 		user.signature = form.signature.data
 		user.about_me = form.about_me.data.strip(' ')
 		db.session.add(user)
@@ -108,21 +111,59 @@ def edit_profile(id):
 	form.username.data = user.username
 	form.name.data = user.name
 	form.img_url.data = user.img_url
+	form.bg_img_url.data =user.bg_img_url
 	form.signature.data = user.signature
 	form.about_me.data = user.about_me
 	return render_template('auth/edit_profile.html', form=form, user=user)
 
-'''
-@auth.route('/users/delete/<int:id>')
+
+
+@auth.route('/add-friend', methods=['GET', 'POST'])
 @login_required
 @admin_required
-def delete_user(id):
-	try:
-		user=User.query.get_or_404(id)
-	except ImportError as e:
-		return render_template('error.html', info='没有这个用户哟')
+def add_friend():
+	#user = User.query.get_or_404(id)
+	form = FriendForm()
+	if form.validate_on_submit():
+		user = Friend(name=form.name.data,
+					site_url=form.site_url.data,
+					img_url=form.img_url.data)
+		db.session.add(user)
+		db.session.commit()
+		flash('成功添加友链')
+		return redirect(url_for('main.index'))
+	return render_template('auth/add_friend.html', form=form)
+
+
+@auth.route('/edit-friend/<int:id>', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def edit_friend(id):
+	user = Friend.query.get_or_404(id)
+	form = FriendForm()
+	if form.validate_on_submit():
+		user.name = form.name.data
+		user.site_url = form.site_url.data
+		user.img_url = form.img_url.data
+		user.about_me = form.about_me.data
+		db.session.add(user)
+		db.session.commit()
+		flash('成功修改友链')
+		return redirect(url_for('main.index'))
+	form.name.data = user.name
+	form.site_url.data = user.site_url
+	form.img_url.data = user.img_url
+	form.about_me.data = user.about_me
+
+	return render_template('auth/add_friend.html', form=form, user=user)
+
+
+@auth.route('/delete-friend/<int:id>')
+@login_required
+@admin_required
+def delete_friend(id):
+	user=Friend.query.get_or_404(id)
 	db.session.delete(user)
 	db.session.commit()
-
-	return redirect(url_for('auth.admin_user'))
-'''
+	flash('成功删除用户')
+	return redirect(url_for('main.index'))

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% import "_wtf.html" as wtf %}
 
-{% block title %}Login | {{super()}}{% endblock %}
+{% block title %}编辑友链 | {{super()}}{% endblock %}
 
 {% block header %}
     {% block nav %}
@@ -11,11 +11,14 @@
 
 {% block page_content %}
 <div class="page-header">
-    <h2>登录</h2>
+    <h2>编辑友链</h2>
+    {% if user %}
+    <a href="{{url_for('auth.delete_friend', id=user.id)}}">
+        <i class="material-icons">delete</i>删除该友链
+    </a>
+    {% endif %}
 </div>
 <div class="col-md-4">
     {{ wtf.quick_form(form) }}
-    <br>
-    <p>新用户? <a href="{{ url_for('auth.register') }}">点击这里进行注册</a>.</p>
 </div>
 {% endblock %}

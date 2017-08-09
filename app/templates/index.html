@@ -31,13 +31,19 @@
         {# 侧栏#}
         <div class="col s3" id="right-index">
             <div class="collection z-depth-2">
-            <form action="#" method="GET">
-              <div class="input-field">
-                <input class="center-align" placeholder="搜索" id="_imgSearch" type="search" name="searchText" required>
-                  <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-                <i class="material-icons">close</i>
-              </div>
-            </form>
+                <form action="#" method="GET">
+                  <div class="input-field">
+                    <input class="center-align" placeholder="搜索" id="_imgSearch" type="search" name="searchText" required>
+                      <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                    <i class="material-icons">close</i>
+                  </div>
+                </form>
+                {% if current_user.can(Permission.ADMINISTER) %}
+                    <a href="{{url_for('main.admin_images')}}" class="collection-item active">相册</a>
+                    <a href="{{url_for('post.upload')}}" class="collection-item">写文章</a>
+                    <a href="{{url_for('auth.add_friend')}}" class="collection-item">友链管理</a>
+                    <a href="#" class="collection-item">文章管理</a>
+                {% endif %}
             </div>
             <div class="collection with-header z-depth-2">
               <ul>

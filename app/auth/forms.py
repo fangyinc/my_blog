@@ -48,6 +48,15 @@ class EditProfileAdminForm(FlaskForm):
 	#age = StringField('年龄', validators=[Length(0, 64)])
 	#location = StringField('地址', validators=[Length(0, 64)])
 	img_url = StringField('头像url')
+	bg_img_url = StringField('背景图片url')
 	signature = StringField('个性签名')
 	about_me = TextAreaField('')
 	#submit = SubmitField('提交')
+
+class FriendForm(FlaskForm):
+	name = StringField('用户名', validators=[
+		Required(), Length(1, 64)])
+	site_url = StringField('网站url')
+	img_url = StringField('头像url')
+	about_me = StringField('简介')
+	submit = SubmitField('提交')

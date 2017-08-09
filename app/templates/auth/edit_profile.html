@@ -46,6 +46,11 @@
                 {{ wtf.form_field(form.img_url, class="validate") }}
             {% endif %}
 
+            {% if form.bg_img_url.data %}
+                {{ wtf.form_field(form.bg_img_url, value=form.bg_img_url.data, class="validate") }}
+            {% else %}
+                {{ wtf.form_field(form.bg_img_url, class="validate") }}
+            {% endif %}
         </div>
         </div>
 
