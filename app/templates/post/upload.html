@@ -20,36 +20,16 @@
         {{ form.hidden_tag() }}
         <div class="container">
         <div class="form-group">
-            {% if title %}
-                {{ wtf.form_field(form.title, value="{{title}}", class="validate") }}
-            {% else %}
-                {{ wtf.form_field(form.title, class="validate") }}
-            {% endif %}
+            {{ wtf.form_field(form.title, class="validate") }}
 
-            {% if spc %}
-                {{ wtf.form_field(form.spc, value="{{spc}}", class="validate") }}
-            {% else %}
-                {{ wtf.form_field(form.spc, class="validate") }}
-            {% endif %}
+            {{ wtf.form_field(form.spc, class="validate") }}
 
-            {% if category %}
-                {{ wtf.form_field(form.category, value="{{category}}", class="validate") }}
-            {% else %}
-                {{ wtf.form_field(form.category, class="validate") }}
-            {% endif %}
+            {{ wtf.form_field(form.category, class="validate") }}
 
-            {% if tags %}
-                {{ wtf.form_field(form.tags, value="{{tags}}", class="validate") }}
-            {% else %}
-                {{ wtf.form_field(form.tags, class="validate") }}
-            {% endif %}
+            {{ wtf.form_field(form.tags, class="validate") }}
 
-            {% if summary %}
-                {{ wtf.form_field(form.summary, value="{{summary}}", class="materialize-textarea") }}
-            {% else %}
-                {{ wtf.form_field(form.summary, class="materialize-textarea") }}
-            {% endif %}
-        </div>
+            {{ wtf.form_field(form.summary, class="materialize-textarea") }}
+    </div>
         </div>
 
         <div class="form-group">

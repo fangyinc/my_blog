@@ -29,31 +29,31 @@
 
         <div class="form-group">
             {# title 等默认是form.title.data #}
-            {% if title %}
-                {{ wtf.form_field(form.title, value=title, class="validate") }}
+            {% if form.title.data %}
+                {{ wtf.form_field(form.title, value=form.title.data, class="validate") }}
             {% else %}
                 {{ wtf.form_field(form.title, class="validate") }}
             {% endif %}
 
-            {% if spc %}
-                {{ wtf.form_field(form.spc, value=spc, class="validate") }}
+            {% if form.spc.data %}
+                {{ wtf.form_field(form.spc, value=form.spc.data, class="validate") }}
             {% else %}
                 {{ wtf.form_field(form.spc, class="validate") }}
             {% endif %}
 
-            {% if category %}
-                {{ wtf.form_field(form.category, value=category, class="validate") }}
+            {% if form.category.data %}
+                {{ wtf.form_field(form.category, value=form.category.data, class="validate") }}
             {% else %}
                 {{ wtf.form_field(form.category, class="validate") }}
             {% endif %}
 
-            {% if tags %}
-                {{ wtf.form_field(form.tags, value=tags, class="validate") }}
+            {% if form.tags.data %}
+                {{ wtf.form_field(form.tags, value=form.tags.data, class="validate") }}
             {% else %}
                 {{ wtf.form_field(form.tags, class="validate") }}
             {% endif %}
 
-            {{ wtf.form_field(form.summary, value="hhee", class="materialize-textarea") }}
+            {{ wtf.form_field(form.summary , class="materialize-textarea") }}
 
         </div>
         </div>

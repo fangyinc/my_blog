@@ -103,7 +103,8 @@ def edit_post(id):
 		return redirect(url_for('post.show_post', id=post.id))
 
 	form.title.data = post.title
-	form.spc.data = post.spc.name
+	if post.spc:			#专栏可能为空
+		form.spc.data = post.spc.name
 	form.category.data = post.category.name
 	form.summary.data = post.summary
 	form.md_data.data = post.body
