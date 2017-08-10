@@ -62,6 +62,8 @@ class save_post:
 			db.session.commit()
 		return post
 	def get_spc(self):
+		if self.spc == '':	#没有专栏
+			return None
 		spc = Spc.query.filter_by(name=self.spc).first()
 		if spc == None:
 			spc = Spc(name=self.spc)
