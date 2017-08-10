@@ -114,3 +114,4 @@ ENV/
 /app/static/editormd/
 /app/static/images/
 
+将删除 .idea/jsLibraryMappings.xml
