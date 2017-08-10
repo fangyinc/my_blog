@@ -49,6 +49,6 @@ def delete_image(filename):
 	os.remove(file_path)
 	return redirect(url_for('main.admin_images'))
 
-@main.route('/baidu_verify_YsBP6bs8sE.html')
+@main.route('/baidu_verify_ruyZUdOLs5.html')
 def baidu_api():
-	return render_template('baidu_verify_YsBP6bs8sE.html')
+	return render_template('baidu_verify_ruyZUdOLs5.html')
